@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import Script from 'next/script'
 import Layout from '../../components/layout'
 

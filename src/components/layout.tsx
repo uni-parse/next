@@ -10,15 +10,18 @@ const profile = {
   imageSrc: '/images/profile.jpg',
 }
 
-interface Props {
-  children?: any
+type Props = {
+  children: React.ReactNode
+  // eslint-disable-next-line react/require-default-props
   isHome?: boolean
   title: string
 }
 
-export default function Layout(props: Props) {
-  const { children, isHome: home, title } = props
-
+export default function Layout({
+  children,
+  isHome = false,
+  title,
+}: Props) {
   return (
     <div className={styles.container}>
       <Head>
@@ -49,7 +52,7 @@ export default function Layout(props: Props) {
       </Head>
 
       <header className={styles.header}>
-        {home ? (
+        {isHome ? (
           <>
             <Image
               priority

@@ -1,8 +1,9 @@
 import fs from 'fs'
 import path from 'path'
-import Layout from '../components/layout'
 import { useState } from 'react'
 import useSWR from 'swr'
+
+import Layout from '../components/layout'
 
 export async function getServerSideProps() {
   const usersPath = path.join(
@@ -17,8 +18,7 @@ export async function getServerSideProps() {
   return { props }
 }
 
-export default function Ssr(props: any) {
-  const { users } = props
+export default function Ssr({ users }: any) {
   const [userName, setUserName] = useState('user1')
 
   return (
@@ -49,8 +49,7 @@ export default function Ssr(props: any) {
   )
 }
 
-function User(props: any) {
-  const { name } = props
+function User({ name }: any) {
   const apiRoutUrl = '/api/getUser'
   const query = `?userName=${name}`
   const url = apiRoutUrl + query

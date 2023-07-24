@@ -34,6 +34,7 @@ export default function Post(props: any) {
       <br />
       date: {date}
       <br />
+      {/* eslint-disable-next-line react/no-danger */}
       <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
     </Layout>
   )
