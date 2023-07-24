@@ -1,8 +1,9 @@
-import Layout from '../../components/layout'
+import Date from '@/components/date'
+import Layout from '@/components/layout'
 import {
   getAllPostIds,
   getPostDataAsync,
-} from '../../utilities/getPosts'
+} from '@/utilities/getPosts'
 
 export async function getStaticPaths() {
   const paths = getAllPostIds()
@@ -24,7 +25,7 @@ export async function getStaticProps(context: any) {
 
 export default function Post(props: any) {
   const { postData } = props
-  const { id, title, date, contentHtml } = postData
+  const { id, title, date, htmlContent } = postData
 
   return (
     <Layout title={title}>
@@ -32,10 +33,10 @@ export default function Post(props: any) {
       <br />
       title: {title}
       <br />
-      date: {date}
+      date: <Date dateString={date} />
       <br />
       {/* eslint-disable-next-line react/no-danger */}
-      <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+      <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
     </Layout>
   )
 }

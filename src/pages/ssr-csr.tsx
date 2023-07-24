@@ -3,7 +3,7 @@ import path from 'path'
 import { useState } from 'react'
 import useSWR from 'swr'
 
-import Layout from '../components/layout'
+import Layout from '@/components/layout'
 
 export async function getServerSideProps() {
   const usersPath = path.join(

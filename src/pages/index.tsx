@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import Layout from '../components/layout'
 
-// import styles from '../styles/Home.module.scss'
-import utilStyles from '../styles/utils.module.scss'
+// import styles from '@/styles/Home.module.scss'
+import utilStyles from '@/styles/utils.module.scss'
 
-import { getAllPostData } from '../utilities/getPosts'
+import Layout from '@/components/layout'
+import { getAllPostsData } from '@/utilities/getPosts'
 
 export async function getStaticProps() {
   /** can read file system data, fetch data or query database:
@@ -12,7 +12,7 @@ export async function getStaticProps() {
    * await (await fetch('..')).json()
    * await someDbSdk.createClient(...).query('select posts...')
    */
-  const allPostsData = getAllPostData()
+  const allPostsData = getAllPostsData()
   const props = { allPostsData }
   return { props }
 }
