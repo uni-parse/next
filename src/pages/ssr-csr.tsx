@@ -19,12 +19,14 @@ export async function getServerSideProps() {
   return { props }
 }
 
-export default function SsrCsr({ users }: any) {
+export default function SsrCsr({ users: ssrUsers }: any) {
+  const [users, setUsers] = useState(ssrUsers)
+
   return (
     <Layout title='ssr-csr'>
       <section className='mb-4 rounded-lg bg-[#222] p-2'>
         <h1>ssr:</h1>
-        <GetUsersSsr users={users} />
+        <GetUsersSsr users={ssrUsers} />
       </section>
 
       <hr />
@@ -32,8 +34,8 @@ export default function SsrCsr({ users }: any) {
       <section className='mt-4 rounded-lg bg-[#222] p-2'>
         <h1>csr:</h1>
         <GetUser />
-        <AddUserForm />
-        <DeleteUserForm />
+        <AddUserForm setUsers={setUsers} />
+        <DeleteUserForm setUsers={setUsers} />
         <GetUsersCsr users={users} />
       </section>
     </Layout>
@@ -98,7 +100,7 @@ function User({ name }: any) {
   )
 }
 
-function AddUserForm() {
+function AddUserForm({ setUsers }: any) {
   const [name, setName] = useState('')
   const [money, setMoney] = useState('')
   const [xp, setXp] = useState('')
@@ -113,11 +115,12 @@ function AddUserForm() {
       },
       body: JSON.stringify({ name, money, xp }),
     })
-    const { message } = await res.json()
+    const { message, users } = await res.json()
     setOutput(message)
     setName('')
     setMoney('')
     setXp('')
+    setUsers(users)
   }
 
   return (
@@ -166,7 +169,7 @@ function AddUserForm() {
   )
 }
 
-function DeleteUserForm() {
+function DeleteUserForm({ setUsers }: any) {
   const [name, setName] = useState('')
   const [output, setOutput] = useState('waiting...')
 
@@ -175,9 +178,10 @@ function DeleteUserForm() {
     const res = await fetch(`/api/users?userName=${name}`, {
       method: 'DELETE',
     })
-    const { message } = await res.json()
+    const { message, users } = await res.json()
     setOutput(message)
     setName('')
+    setUsers(users)
   }
 
   return (
@@ -205,21 +209,10 @@ function DeleteUserForm() {
   )
 }
 
-function GetUsersCsr({ users: ssrUsers }: any) {
-  const [users, setUsers] = useState(ssrUsers)
-
-  const handleSumbit = async () => {
-    const res = await fetch('/api/users', { method: 'GET' })
-    const users = await res.json()
-    setUsers(users)
-  }
-
+function GetUsersCsr({ users }: any) {
   return (
     <div className='rounded-xl bg-yellow-900 p-2'>
       <h3>get users:</h3>
-      <button type='button' onClick={handleSumbit}>
-        ReLoad
-      </button>
       {users.map((user: any) => (
         <details key={user.name}>
           <summary>{user.name}</summary>

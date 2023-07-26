@@ -35,9 +35,10 @@ export default function handler(
       const user = { name, money: +money, xp: +xp }
       users.push(user)
       fs.writeFileSync(filePath, JSON.stringify(users, null, 2))
-      res
-        .status(200)
-        .json({ message: `${user.name} added successfully` })
+      res.status(200).json({
+        users,
+        message: `${user.name} added successfully`,
+      })
       break
 
     case 'DELETE': // remove user
@@ -50,6 +51,7 @@ export default function handler(
         JSON.stringify(updatedUsers, null, 2)
       )
       res.status(200).json({
+        users: updatedUsers,
         message: `${userName} removed successfully`,
       })
       break
