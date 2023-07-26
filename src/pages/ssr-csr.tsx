@@ -79,7 +79,7 @@ function GetUser() {
 function User({ name }: any) {
   const url = `/api/users?userName=${name}`
 
-  async function fetcher(url: URL) {
+  const fetcher = async (url: URL) => {
     const res = await fetch(url)
     const data = await res.json()
     return data
