@@ -1,10 +1,9 @@
 import Link from 'next/link'
-
 // import styles from '@/styles/Home.module.scss'
 import utilStyles from '@/styles/utils.module.scss'
-
 import Layout from '@/components/layout'
 import { getAllPostsData } from '@/utilities/getPosts'
+import Date from '@/components/date'
 
 export async function getStaticProps() {
   /** can read file system data, fetch data or query database:
@@ -33,11 +32,11 @@ export default function Home(props: any) {
         <ul className={utilStyles.list}>
           {allPostsData.map(({ id, date, title }: any) => (
             <li className={utilStyles.listItem} key={id}>
-              {title}
+              <Link href={`/posts/${id}`}>{title}</Link>
               <br />
-              {id}
-              <br />
-              {date}
+              <small className={utilStyles.lightText}>
+                <Date dateString={date} />
+              </small>
             </li>
           ))}
         </ul>
