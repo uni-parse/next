@@ -27,7 +27,9 @@ export default function SsrCsr({ users }: any) {
         <GetUsersSsr users={users} />
       </section>
 
-      <section className='rounded-lg bg-[#222] p-2'>
+      <hr />
+
+      <section className='mt-4 rounded-lg bg-[#222] p-2'>
         <h1>csr:</h1>
         <GetUser />
         <AddUserForm />
@@ -175,6 +177,7 @@ function DeleteUserForm() {
     })
     const { message } = await res.json()
     setOutput(message)
+    setName('')
   }
 
   return (
