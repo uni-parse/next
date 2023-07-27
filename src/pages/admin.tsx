@@ -21,7 +21,7 @@ export async function getServerSideProps() {
 
 export default function Admin({ users: ssrUsers }: any) {
   const [users, setUsers] = useState(ssrUsers)
-  useAuthAdmin()
+  // useAuthAdmin()
 
   return (
     <Layout title='Admin'>
@@ -65,7 +65,7 @@ async function authAdmin() {
 
 function GetUsersSsr({ users }: any) {
   return (
-    <div className='rounded-xl bg-yellow-900 p-2'>
+    <div className='rounded-xl bg-cyan-900 p-2'>
       <h3>get users:</h3>
       {users.map((user: any) => (
         <details key={user.name}>
@@ -106,7 +106,7 @@ function AddUserForm({ setUsers }: any) {
   return (
     <form
       onSubmit={handleSubmit}
-      className='my-2 rounded-xl bg-yellow-900 p-2'>
+      className='my-2 rounded-xl bg-cyan-900 p-2'>
       <h3>add user:</h3>
       <input
         type='text'
@@ -167,7 +167,7 @@ function DeleteUserForm({ setUsers }: any) {
   return (
     <form
       onSubmit={handleSubmit}
-      className='my-2 rounded-xl bg-yellow-900 p-2'>
+      className='my-2 rounded-xl bg-cyan-900 p-2'>
       <h3>delete user:</h3>
 
       <input
@@ -191,7 +191,7 @@ function DeleteUserForm({ setUsers }: any) {
 
 function GetUsersCsr({ users }: any) {
   return (
-    <div className='rounded-xl bg-yellow-900 p-2'>
+    <div className='rounded-xl bg-cyan-900 p-2'>
       <h3>get users:</h3>
       {users.map((user: any) => (
         <details key={user.name}>
@@ -210,7 +210,7 @@ function GetUser() {
   const [userName, setUserName] = useState('')
 
   return (
-    <div className='my-2 rounded-xl bg-yellow-900 p-2'>
+    <div className='my-2 rounded-xl bg-cyan-900 p-2'>
       <h3>get user:</h3>
       <input
         type='text'
