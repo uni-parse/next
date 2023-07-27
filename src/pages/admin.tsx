@@ -21,7 +21,7 @@ export async function getServerSideProps() {
 
 export default function Admin({ users: ssrUsers }: any) {
   const [users, setUsers] = useState(ssrUsers)
-  // useAuthAdmin()
+  useAuthAdmin()
 
   return (
     <Layout title='Admin'>
