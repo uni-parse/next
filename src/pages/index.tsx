@@ -44,7 +44,7 @@ export default function Home(props: any) {
 
       <nav className='flex justify-evenly'>
         <Link href='/posts/first-post'>First Post</Link>
-        <Link href='/ssr-csr'>ssr-csr</Link>
+        <Link href='/admin'>Admin</Link>
       </nav>
 
       <style jsx>{`

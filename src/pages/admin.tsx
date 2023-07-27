@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import fs from 'fs'
 import path from 'path'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
 import Layout from '@/components/layout'
@@ -19,11 +19,12 @@ export async function getServerSideProps() {
   return { props }
 }
 
-export default function SsrCsr({ users: ssrUsers }: any) {
+export default function Admin({ users: ssrUsers }: any) {
   const [users, setUsers] = useState(ssrUsers)
+  useAuthAdmin()
 
   return (
-    <Layout title='ssr-csr'>
+    <Layout title='Admin'>
       <section className='mb-4 rounded-lg bg-[#222] p-2'>
         <h1>ssr:</h1>
         <GetUsersSsr users={ssrUsers} />
@@ -42,6 +43,26 @@ export default function SsrCsr({ users: ssrUsers }: any) {
   )
 }
 
+function useAuthAdmin() {
+  useEffect(() => {
+    authAdmin()
+  }, [])
+}
+
+async function authAdmin() {
+  const pw = prompt('Enter Password', '')
+  const res = await fetch(`/api/authAdmin?pw=${pw}`, {
+    method: 'GET',
+  })
+  const { message } = await res.json()
+
+  if (res.status === 200) alert(message)
+  else {
+    alert(message)
+    authAdmin()
+  }
+}
+
 function GetUsersSsr({ users }: any) {
   return (
     <div className='rounded-xl bg-yellow-900 p-2'>
@@ -56,47 +77,6 @@ function GetUsersSsr({ users }: any) {
         </details>
       ))}
     </div>
-  )
-}
-
-function GetUser() {
-  const [userName, setUserName] = useState('')
-
-  return (
-    <div className='my-2 rounded-xl bg-yellow-900 p-2'>
-      <h3>get user:</h3>
-      <input
-        type='text'
-        placeholder='name'
-        onChange={e => setUserName(e.target.value)}
-      />
-
-      {userName ? <User name={userName} /> : <p>waiting...</p>}
-    </div>
-  )
-}
-
-function User({ name }: any) {
-  const url = `/api/users?userName=${name}`
-
-  const fetcher = async (url: URL) => {
-    const res = await fetch(url)
-    const data = await res.json()
-    return data
-  }
-
-  const { data: user, error } = useSWR(url, fetcher)
-
-  if (error) return <div>invalid userName / failed to load</div>
-  if (!user) return <div>loading...</div>
-  return (
-    <details>
-      <summary>{user.name}</summary>
-      <ul>
-        <li>money: {user.money}</li>
-        <li>xp: {user.xp}</li>
-      </ul>
-    </details>
   )
 }
 
@@ -223,5 +203,46 @@ function GetUsersCsr({ users }: any) {
         </details>
       ))}
     </div>
+  )
+}
+
+function GetUser() {
+  const [userName, setUserName] = useState('')
+
+  return (
+    <div className='my-2 rounded-xl bg-yellow-900 p-2'>
+      <h3>get user:</h3>
+      <input
+        type='text'
+        placeholder='name'
+        onChange={e => setUserName(e.target.value)}
+      />
+
+      {userName ? <User name={userName} /> : <p>waiting...</p>}
+    </div>
+  )
+}
+
+function User({ name }: any) {
+  const url = `/api/users?userName=${name}`
+
+  const fetcher = async (url: URL) => {
+    const res = await fetch(url)
+    const data = await res.json()
+    return data
+  }
+
+  const { data: user, error } = useSWR(url, fetcher)
+
+  if (error) return <div>invalid userName / failed to load</div>
+  if (!user) return <div>loading...</div>
+  return (
+    <details>
+      <summary>{user.name}</summary>
+      <ul>
+        <li>money: {user.money}</li>
+        <li>xp: {user.xp}</li>
+      </ul>
+    </details>
   )
 }

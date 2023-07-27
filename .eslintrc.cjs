@@ -14,6 +14,7 @@ module.exports = {
     'prettier/prettier': 'off',
     'spaced-comment': 'warn',
     'no-console': 'off',
+    'no-alert': 'off',
     '@typescript-eslint/no-shadow': 'off',
     'prefer-const': 'warn',
     '@typescript-eslint/no-use-before-define': 'off',

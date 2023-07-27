@@ -1,3 +1,5 @@
+// only for ssr
+
 const EXTERNAL_DATA_URL =
   'https://jsonplaceholder.typicode.com/posts'
 
@@ -14,17 +16,12 @@ export async function getServerSideProps({ res }: any) {
   res.write(sitemap)
   res.end()
 
-  return {
-    props: {},
-  }
-}
-
-export default function SiteMap() {
-  // getServerSideProps will do the heavy lifting
+  return { props: {} }
 }
 
 function generateSiteMap(posts: any) {
-  return `<?xml version="1.0" encoding="UTF-8"?>
+  return `
+   <?xml version="1.0" encoding="UTF-8"?>
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      <!--We manually set the two URLs we know already-->
      <url>
@@ -34,14 +31,18 @@ function generateSiteMap(posts: any) {
        <loc>https://jsonplaceholder.typicode.com/guide</loc>
      </url>
      ${posts
-       .map(({ id }: any) => {
-         return `
+       .map(
+         ({ id }: any) => `
        <url>
            <loc>${`${EXTERNAL_DATA_URL}/${id}`}</loc>
        </url>
      `
-       })
+       )
        .join('')}
    </urlset>
  `
+}
+
+export default function SiteMap() {
+  // getServerSideProps will do the heavy lifting
 }
