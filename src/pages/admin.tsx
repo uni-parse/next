@@ -24,7 +24,7 @@ export default function Admin({ users: ssrUsers }: any) {
   useAuthAdmin()
 
   return (
-    <Layout title='Admin'>
+    <Layout title='Admin' robots='noindex,nofollow'>
       <section className='mb-4 rounded-lg bg-[#222] p-2'>
         <h1>ssr:</h1>
         <GetUsersSsr users={ssrUsers} />

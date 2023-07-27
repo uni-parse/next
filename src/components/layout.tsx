@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -12,15 +13,16 @@ const profile = {
 
 type Props = {
   children: React.ReactNode
-  // eslint-disable-next-line react/require-default-props
   isHome?: boolean
   title: string
+  robots?: string
 }
 
 export default function Layout({
   children,
   isHome = false,
   title,
+  robots,
 }: Props) {
   return (
     <div className={styles.container}>
@@ -30,6 +32,8 @@ export default function Layout({
         <link rel='icon' href='/favicon.ico' />
 
         <meta name='color-scheme' content='dark' />
+
+        {robots && <meta name='robots' content={robots} />}
 
         <meta
           name='description'
