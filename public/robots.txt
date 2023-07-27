@@ -1,0 +1,10 @@
+
+User-agent: *
+# block /src/pages/admin.(html|xml|pdf|js|css|...)
+Disallow: /admin
+# block all sub files /src/pages/posts/**/*.(...)
+Disallow: /posts/
+
+# Allow all crawlers
+User-agent: *
+Allow: /
