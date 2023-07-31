@@ -4,27 +4,37 @@ import path from 'path'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
+import Head from 'next/head'
 import Layout from '@/components/layout'
+import { GetServerSideProps } from 'next'
 
-export async function getServerSideProps() {
-  const usersPath = path.join(
-    process.cwd(),
-    'dataBase',
-    'users.json'
-  )
-  const usersJsonStr = fs.readFileSync(usersPath, 'utf8')
-  const users = await JSON.parse(usersJsonStr)
+export const getServerSideProps: GetServerSideProps =
+  async () => {
+    const usersPath = path.join(
+      process.cwd(),
+      'dataBase',
+      'users.json'
+    )
+    const usersJsonStr = fs.readFileSync(usersPath, 'utf8')
+    const users = await JSON.parse(usersJsonStr)
 
-  const props = { users }
-  return { props }
-}
+    const props = { users }
+    return { props }
+  }
 
 export default function Admin({ users: ssrUsers }: any) {
   const [users, setUsers] = useState(ssrUsers)
   useAuthAdmin()
 
   return (
-    <Layout title='Admin' robots='noindex,nofollow'>
+    <Layout title='Admin'>
+      <Head>
+        <meta name='robots' content='noindex,nofollow' />
+        <meta name='googlebot' content='noindex,nofollow' />
+        <meta name='google' content='nositelinkssearchbox' />
+        <meta name='google' content='notranslate' />
+      </Head>
+
       <section className='mb-4 rounded-lg bg-[#222] p-2'>
         <h1>ssr:</h1>
         <GetUsersSsr users={ssrUsers} />

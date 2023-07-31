@@ -15,6 +15,7 @@ type Props = {
   children: React.ReactNode
   isHome?: boolean
   title: string
+  desc?: string
   robots?: string
 }
 
@@ -22,6 +23,7 @@ export default function Layout({
   children,
   isHome = false,
   title,
+  desc,
   robots,
 }: Props) {
   return (
@@ -35,19 +37,16 @@ export default function Layout({
 
         {robots && <meta name='robots' content={robots} />}
 
-        <meta
-          name='description'
-          content='learn how to build a personal website using nextJs'
-        />
+        {desc && <meta name='description' content={desc} />}
 
+        <meta name='og:title' content={title} />
+        {desc && <meta name='og:description' content={desc} />}
         <meta
           property='og:image'
           content={`https://og-image.vercel.app/${encodeURI(
             title
           )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
         />
-
-        <meta name='og:title' content={title} />
 
         <meta
           name='twitter:card'

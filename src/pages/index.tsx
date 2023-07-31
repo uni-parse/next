@@ -4,16 +4,17 @@ import utilStyles from '@/styles/utils.module.scss'
 import Layout from '@/components/layout'
 import { getAllPostsData } from '@/utilities/getPosts'
 import Date from '@/components/date'
+import { GetStaticProps } from 'next'
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
+  const allPostsData = getAllPostsData()
+  const props = { allPostsData }
+  return { props }
   /** can read file system data, fetch data or query database:
    * fs.readFileSync(filePath, 'utf8')
    * await (await fetch('..')).json()
    * await someDbSdk.createClient(...).query('select posts...')
    */
-  const allPostsData = getAllPostsData()
-  const props = { allPostsData }
-  return { props }
 }
 
 export default function Home(props: any) {
