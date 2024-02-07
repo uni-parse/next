@@ -5,8 +5,9 @@ import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
 import Head from 'next/head'
-import Layout from '@/components/layout'
 import { GetServerSideProps } from 'next'
+
+import Layout from '@/components/layout'
 
 export const getServerSideProps: GetServerSideProps =
   async () => {
@@ -92,7 +93,7 @@ function GetUsersSsr({ users }: any) {
 
 function AddUserForm({ setUsers }: any) {
   const [name, setName] = useState('')
-  const [money, setMoney] = useState('')
+const [money, setMoney] = useState('')
   const [xp, setXp] = useState('')
   const [output, setOutput] = useState('waiting...')
 

@@ -3,17 +3,24 @@ import fs from 'fs'
 import path from 'path'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
+const filePath = path.join(
+  process.cwd(),
+  'dataBase',
+  'users.json'
+)
+
+interface User {
+  name: string
+  money: number
+  xp: number
+}
+
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const filePath = path.join(
-    process.cwd(),
-    'dataBase',
-    'users.json'
-  )
   const fileData = fs.readFileSync(filePath, 'utf8')
-  const users = JSON.parse(fileData)
+  const users: User[] = JSON.parse(fileData)
 
   switch (req.method) {
     case 'GET': // get user | users
@@ -32,7 +39,7 @@ export default function handler(
 
     case 'POST': // add user
       const { name, money, xp } = req.body
-      const user = { name, money: +money, xp: +xp }
+      const user: User = { name, money: +money, xp: +xp }
       users.push(user)
       fs.writeFileSync(filePath, JSON.stringify(users, null, 2))
       res.status(200).json({
@@ -52,7 +59,7 @@ export default function handler(
       )
       res.status(200).json({
         users: updatedUsers,
-        message: `${userName} removed successfully`,
+        message: `${userName} deleted successfully`,
       })
       break
 

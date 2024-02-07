@@ -15,8 +15,8 @@ export default function handler(
     'dataBase',
     'authAdmin.json'
   )
-  const json = fs.readFileSync(filePath, 'utf8')
-  const { pw: dataBasePw } = JSON.parse(json)
+  const pwJson = fs.readFileSync(filePath, 'utf8')
+  const { pw: dataBasePw } = JSON.parse(pwJson)
 
   // validate password
   const access = userPw === dataBasePw
